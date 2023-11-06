@@ -1,6 +1,6 @@
 .gallery-main {
   margin: auto;
-  width: 70%;
+  width: 50%;
   border: 1px solid #aaa;
   border-radius: 10px;
   box-shadow: 2px 2px 2px 2px #aaa;
@@ -23,14 +23,15 @@
   --gap: 10px;
   --num-cols: 5;
   --row-height: 150px;
-
   box-sizing: border-box;
   padding: var(--gap);
-
   display: grid;
   grid-template-columns: repeat(var(--num-cols), 1fr);
   grid-auto-rows: var(--row-height);
+  grid-gap: var(--gap);
   gap: var(--gap);
+  overflow: scroll;
+  overflow-x: hidden;
 }
 .gallery .pics:first-child {
   grid-column: span 2;
@@ -122,18 +123,30 @@
   border-radius: 10px;
   box-shadow: 2px 2px 2px 2px #aaa;
 }
-@media (max-width: 991px) {
+@media only screen and (min-width: 768px) and (max-width: 991px)  {
   .gallery {
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
-    column-count: 2;
+    --gap: 10px;
+    --num-cols: 4;
+    --row-height: 20%;
   }
+  .gallery-main {
+    width: 90%;
+  }
+  .img-upload-content {
+    padding: 28% 0% 0% 23%;
 }
-@media (max-width: 480px) {
+}
+@media only screen and (max-width: 767px){
   .gallery {
     --gap: 10px;
     --num-cols: 3;
-    --row-height: 90px;
+    --row-height: 20%;
+  }
+  .gallery-main {
+    width: 90%;
+  }
+  .img-upload-content {
+    padding: 23% 0% 0% 3%;
   }
 }
 .checkbox-details .form-check-label {

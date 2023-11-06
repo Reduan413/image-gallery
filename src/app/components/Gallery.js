@@ -47,14 +47,44 @@ const Gallery = () => {
       setSelectedImages(filterData);
     }
   };
-  const handleDeleteFiles = () => {
-    setSelectedImages([]);
+  const filterArrays = (arr1, arr2) => {
+    return arr1.filter(item1 => !arr2.some(item2 => item1.id === item2.id));
   };
+  const handleDeleteFiles = () => {
+    const filteredArray1 = filterArrays(allData, selectedImages);
+    setAllData(filteredArray1)
+  };
+  //  Image Upload Function
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setSelectedImage(file);
+  };
+
+  useEffect(() => {
+    if (selectedImage) {
+      // Generate a unique ID for the new card
+      const newId = Math.max(...allData.map((singleData) => singleData.id)) + 1;
+      const newData = {
+        id: newId,
+        imgSrc: URL.createObjectURL(selectedImage), // Use a temporary URL for the image
+      };
+
+      // Update the cards state with the new card
+      setAllData([...allData, newData]);
+
+      // Reset the selected image state
+      setSelectedImage(null);
+    }
+  }, [selectedImage, allData]);
   return (
     <div className="gallery-main">
       <div className="gallery-main-header">
         <h3>{selectedImages?.length} Files Selected</h3>
-        {selectedImages?.length > 0 && <button onClick={handleDeleteFiles}>Delete Fils</button>}
+        {selectedImages?.length > 0 && (
+          <button onClick={handleDeleteFiles}>Delete Fils</button>
+        )}
       </div>
       <div className="gallery">
         {allData?.map((item, index) => (
@@ -78,7 +108,12 @@ const Gallery = () => {
               Add Images
             </div>
 
-            <input name="myImage" type="file" accept="image/*" />
+            <input
+              name="myImage"
+              type="file"
+              accept=".jpeg, .jpg, .png, .webp"
+              onChange={handleImageUpload}
+            />
           </label>
         </div>
       </div>

@@ -30,7 +30,8 @@ const ImageCard = ({
     dragItem.current = position;
     selectedDragItem.dragItem = position;
   };
-  const drop = (e, a) => {
+  const drop = (e) => {
+    e.preventDefault();
     const copyListItems = [...allData];
     const dragItemContent = copyListItems[selectedDragItem.dragItem];
     copyListItems.splice(selectedDragItem.dragItem, 1);
@@ -59,12 +60,12 @@ const ImageCard = ({
         setIsDrag(true);
       }}
       onDragEnd={(e) => {
-        drop()
+        drop(e)
       }}
       onDragLeave={(e) => setIsDrag(false)}
       draggable
     >
-      <Image src={item?.imgSrc} alt="" />
+      <Image src={item?.imgSrc} alt="" width={500} height={300}/>
       <label
         className={
           isSelected
