@@ -106,11 +106,12 @@
   width: 100% !important;
   height: 100%;
   border-radius: 10px;
+  text-align: center;
   /* margin: auto; */
 }
 .img-upload-content {
   color: black;
-  padding: 30% 0% 0% 25%;
+  padding: 30% 0% 0% 0%;
   text-align: center;
   display: inline-block;
 }
@@ -127,26 +128,26 @@
   .gallery {
     --gap: 10px;
     --num-cols: 4;
-    --row-height: 20%;
+    --row-height: 150px;
   }
   .gallery-main {
     width: 90%;
   }
   .img-upload-content {
-    padding: 28% 0% 0% 23%;
+    padding: 32% 0% 0% 23%;
 }
 }
 @media only screen and (max-width: 767px){
   .gallery {
     --gap: 10px;
     --num-cols: 3;
-    --row-height: 20%;
+    --row-height: 100px;
   }
   .gallery-main {
     width: 90%;
   }
   .img-upload-content {
-    padding: 23% 0% 0% 3%;
+    padding: 20% 0% 0% 0%;
   }
 }
 .checkbox-details .form-check-label {
