@@ -33,10 +33,10 @@
   overflow: scroll;
   overflow-x: hidden;
 }
-.gallery .pics:first-child {
+/* .gallery .pics:first-child {
   grid-column: span 2;
   grid-row: span 2;
-}
+} */
 .gallery .pics {
   -webkit-transition: all 350ms ease;
   transition: all 350ms ease;
@@ -45,6 +45,10 @@
   position: relative;
   border: 1px solid #aaa;
   border-radius: 10px;
+}
+.gallery .pic-div{
+  width: 100%;
+  height: 100%;
 }
 .gallery .pics img {
   width: 100%;
