@@ -50,7 +50,6 @@ function Gallery({ allData, selectedImages, handleSelectedImages, setAllData, ha
             const overItems = overColumn.cards;
             const activeIndex = activeItems.findIndex((i) => i.id === activeId);
             const overIndex = overItems.findIndex((i) => i.id === overId);
-            console.log(activeIndex, overIndex)
             const newIndex = () => {
                 const putOnBelowLastItem =
                     overIndex === overItems.length - 1 && delta.y > 0;
@@ -117,27 +116,20 @@ function Gallery({ allData, selectedImages, handleSelectedImages, setAllData, ha
             onDragEnd={handleDragEnd}
             onDragOver={handleDragOver}
         >
-            <div
-                className="App"
-                style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    padding: '20px',
-                    flexWrap: 'wrap',
-                    gap: '20px',
-                }}
-            >
+            <div >
                 {columns.map((column) => (
-                    <GalleryColumn key={column.id}
-                        id={column.id}
-                        title={column.title}
-                        cards={column.cards}
-                        selectedImages={selectedImages}
-                        handleSelectedImages={handleSelectedImages}
-                        setAllData={setAllData}
-                        handleImageUpload={handleImageUpload} />))}
-            </div>
+                    <SortableContext
+                        items={column.cards}
+                    >
+                        <GalleryColumn key={column.id}
+                            id={column.id}
+                            title={column.title}
+                            cards={column.cards}
+                        />
 
+                    </SortableContext>
+                ))}
+            </div>
         </DndContext>
 
     )

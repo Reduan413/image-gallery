@@ -5,21 +5,9 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
 const ImageCard = ({
-  item,
-  handleSelectedImages,
-  selectedImages,
+  item
 }) => {
-  const [isSelected, setIsSelected] = useState(false);
-  useEffect(() => {
-    const exists = selectedImages?.find(
-      (singleImage) => singleImage?.id === item?.id
-    );
-    if (exists) {
-      setIsSelected(true);
-    } else {
-      setIsSelected(false);
-    }
-  }, [item, selectedImages]);
+
 
   const { attributes, listeners, setNodeRef, transform } = useSortable({
     id: item?.id,
@@ -35,7 +23,7 @@ const ImageCard = ({
   const handleCheckboxChange = (event) => {
     event.stopPropagation(); // Prevent drag event from firing
     // handleSelectedImages(item);
-    console.log("item",item)
+    console.log("item", item)
   };
 
   return (
@@ -45,27 +33,8 @@ const ImageCard = ({
       style={style}
       className="pics"
       id={item?.id}
-      >
-      
-
-      <Image src={item?.imgSrc} alt="" width={500} height={300}  />
-      <label
-        className={
-          isSelected
-            ? "checkbox-details-active"
-            : "checkbox-details"
-        }
-      // onClick={() => console.log("item", item)}
-      >
-        <input
-          className="form-check-input"
-          type="checkbox"
-          checked={isSelected}
-          id="flexCheckChecked2"
-          onChange={handleCheckboxChange}
-        />
-      </label>
-      {/* {isDrag && <div className="is-drag"></div>} */}
+    >
+      <Image src={item?.imgSrc} alt="" width={500} height={300} />
     </div>
 
 
