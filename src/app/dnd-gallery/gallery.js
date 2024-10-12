@@ -17,19 +17,23 @@ function Gallery({ allData, selectedImages, handleSelectedImages, setAllData, ha
     const [columns, setColumns] = useState(allData);
 
     const findColumn = (unique) => {
-        if (!unique) {
-            return null;
+        try {
+            if (!unique) {
+                return null;
+            }
+            if (columns.some((c) => c.id == unique)) {
+                return columns.find((c) => c.id == unique) ?? null;
+            }
+            const id = String(unique);
+            const itemWithColumnId = columns.flatMap((c) => {
+                const columnId = c.id;
+                return c.cards.map((i) => ({ itemId: i.id, columnId: columnId }));
+            });
+            const columnId = itemWithColumnId.find((i) => i.itemId == id)?.columnId;
+            return columns.find((c) => c.id == columnId) ?? null;
+        } catch (error) {
+
         }
-        if (columns.some((c) => c.id === unique)) {
-            return columns.find((c) => c.id === unique) ?? null;
-        }
-        const id = String(unique);
-        const itemWithColumnId = columns.flatMap((c) => {
-            const columnId = c.id;
-            return c.cards.map((i) => ({ itemId: i.id, columnId: columnId }));
-        });
-        const columnId = itemWithColumnId.find((i) => i.itemId === id)?.columnId;
-        return columns.find((c) => c.id === columnId) ?? null;
     };
 
     const handleDragOver = (event) => {
@@ -46,6 +50,7 @@ function Gallery({ allData, selectedImages, handleSelectedImages, setAllData, ha
             const overItems = overColumn.cards;
             const activeIndex = activeItems.findIndex((i) => i.id === activeId);
             const overIndex = overItems.findIndex((i) => i.id === overId);
+            console.log(activeIndex, overIndex)
             const newIndex = () => {
                 const putOnBelowLastItem =
                     overIndex === overItems.length - 1 && delta.y > 0;
@@ -56,13 +61,15 @@ function Gallery({ allData, selectedImages, handleSelectedImages, setAllData, ha
                 if (c.id === activeColumn.id) {
                     c.cards = activeItems.filter((i) => i.id !== activeId);
                     return c;
-                } else if (c.id === overColumn.id) {
-                    c.cards = [
-                        ...overItems.slice(0, newIndex()),
-                        activeItems[activeIndex],
-                        ...overItems.slice(newIndex(), overItems.length),
-                    ];
-                    return c;
+                } else if (c.id == overColumn.id) {
+                    return {
+                        ...c,
+                        cards: [
+                            ...overItems.slice(0, newIndex()),
+                            activeItems[activeIndex],
+                            ...overItems.slice(newIndex(), overItems.length),
+                        ]
+                    };
                 } else {
                     return c;
                 }
@@ -84,9 +91,10 @@ function Gallery({ allData, selectedImages, handleSelectedImages, setAllData, ha
         if (activeIndex !== overIndex) {
             setColumns((prevState) => {
                 return prevState.map((column) => {
+                    console.log(overIndex, activeIndex, column.id, activeColumn.id)
                     if (column.id === activeColumn.id) {
-                        column.cards = arrayMove(overColumn.cards, activeIndex, overIndex);
-                        return column;
+                        const updatedCards = arrayMove(overColumn.cards, activeIndex, overIndex);
+                        return { ...column, cards: updatedCards };
                     } else {
                         return column;
                     }

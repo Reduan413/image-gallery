@@ -26,6 +26,11 @@ function Page() {
                 { id: "img3", imgSrc: image3 },
                 { id: "img4", imgSrc: image4 },
                 { id: "img5", imgSrc: image5 },
+            ],
+        },        {
+            id: 'real_madrid',
+            title: 'Real Madrid',
+            cards: [
                 { id: "img6", imgSrc: image6 },
                 { id: "img7", imgSrc: image7 },
                 { id: "img8", imgSrc: image8 },
